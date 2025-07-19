@@ -1,0 +1,556 @@
+/* ========== 合并后的样式 ========== */
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding: 0;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1vh 1vw;
+    gap: 1vh;
+}
+
+/* 容器样式 */
+.styles-container,
+.stamps-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0.5vw;
+    padding: 1vh;
+    align-items: flex-start;
+
+}
+
+.styles-container {
+    height: 60vh;
+    padding-bottom: 0;
+}
+
+.stamps-container {
+    background-color: #ffffff;
+    height: 16vh;
+    border-radius: 12px;
+}
+
+.styles-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* 项目样式 */
+.styles-container>.style-item,
+.stamps-container>.stamp-item {
+    position: relative;
+    display: inline-block;
+    flex: 0 0 auto;
+    width: auto;
+    height: 100%;
+    background: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.styles-container>.style-item>.styleBg {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: auto;
+}
+
+/* 图片样式 */
+.styles-container>.style-item img,
+.stamps-container>.stamp-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* 按钮样式 */
+button {
+    padding: 10px 20px;
+    background-color: #00011e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #00c4c4;
+}
+
+/* 上传区域样式 */
+.upload-area {
+    position: fixed;
+    width: 100vw;
+    height: 15vh;
+    bottom: 50px;
+    margin: auto;
+    display: flex;
+    gap: 1vw;
+    padding: 0 1vw;
+    z-index: 99;
+    align-items: flex-start;
+}
+
+.upload-container {
+    border: 1px dashed #141212;
+    width: 40vw;
+    height: 100%;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.upload-container:hover {
+    background-color: #d5edff;
+}
+
+.upload-container.drag-over {
+    border-color: #1c1b1f;
+    background-color: #d5edff;
+    color: rgb(0, 24, 71);
+}
+
+.upload-container>span {
+    font-size: 14px;
+    color: #919598;
+    display: block;
+}
+
+.upload-input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    cursor: pointer;
+}
+
+.button-container {
+    width: 16vw;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.mix {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    background-color: rgb(0, 2, 17);
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.mix:hover {
+    background-color: #001f2a;
+}
+
+/* 图章项目样式 */
+.stamp-item {
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 5px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.stamp-item.new-upload {
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+    transform: scale(1.02);
+}
+
+.sequence-number {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgb(23, 22, 22);
+    border-radius: 6px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.file-name {
+    position: absolute;
+    top: 4px;
+    left: 30px;
+    max-width: calc(100% - 40px);
+    padding: 0 6px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgb(23, 22, 22);
+    border-radius: 6px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 10;
+}
+
+.stamp-item:hover>.delete-stamp,
+.style-item:hover>.delete-stamp {
+    display: flex;
+}
+
+.delete-stamp {
+    position: absolute;
+    display: none;
+    width: 30px;
+    height: 30px;
+    right: 0px;
+    top: 0px;
+    background: #ff4444;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    z-index: 10;
+}
+
+
+.delete-stamp:hover {
+    background-color: #d32f2f;
+}
+
+.sync-stamp {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background-color: #00ffff;
+    color: #141212;
+    height: 30px;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+}
+
+.sync-stamp:hover {
+    background-color: #00e1e1;
+}
+
+/* 弹层样式 */
+.stamp-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 96vh;
+    height: 96vh;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.stamp-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    height: 95vh;
+    position: relative;
+}
+
+.stamp-preview img {
+    max-width: 100%;
+    max-height: 88vh;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.position-options {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-radius: 5px;
+    padding: 16px 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+}
+
+.position-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.position-options input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.close-modal {
+    position: relative;
+    top: 410px;
+    display: block;
+    width: 100px;
+    height: 48px;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.close-modal:hover {
+    background-color: #45a049;
+}
+
+/* 位置标记样式 */
+.position-markers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.position-marker {
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    background-color: rgba(76, 175, 80, 0.3);
+    border: 2px solid #4CAF50;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.position-marker[data-active="false"] {
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 2px dashed #FF0000;
+    opacity: 0.5;
+}
+
+.position-marker.selected {
+    background-color: rgba(255, 193, 7, 0.5);
+    border: 2px solid #FFC107;
+    opacity: 1;
+}
+
+.position-marker.resizing-locked {
+    outline: 2px dashed #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+.position-marker.resizing-locked::after {
+    content: "🔒";
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    font-size: 16px;
+    background: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.position-marker span {
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 3px #000;
+    pointer-events: none;
+}
+
+.ui-resizable-handle {
+    width: 10px;
+    height: 10px;
+    background: #4CAF50;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.rotate-handle {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 2;
+    user-select: none;
+}
+
+.status-display {
+    position: fixed;
+    left: 15vw;
+    bottom: 18vh;
+    margin: 15px auto;
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 4px;
+    text-align: center;
+    max-width: 600px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.stamp-on-style {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    top: 0;
+}
+
+.stamp-on-style img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: top;
+}
+
+/* 下载蒙层样式 */
+.download-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.download-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.download-progress {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0;
+    background-color: #4CAF50;
+    animation: progress 2s ease-in-out infinite;
+}
+
+.progress-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.stamp-position-display {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+@keyframes progress {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
